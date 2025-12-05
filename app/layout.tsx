@@ -48,7 +48,7 @@ export default async function RootLayout({
           <meta key={name} name={name} content={content} />
         ))}
       </head>
-      <body className="bg-white bg-fixed bg-center bg-no-repeat bg-cover bg-[ur[](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj2FvzqyWshUu4xMj5QkCPh6NNWPUyN1dzE8TThiXWuiQyJvjlN0P7p41gqQhOW9nJM7LYXb2zWdKSVZrexvV0rUkk1JlRz8N5wLQiT2SW2sD7tnt0X48usAiws5SKGguXd-HH3pd4h0KXwJ5NN6aqWopJgLYSslo7W1pF7OR3z1fDCfW7jjs-PkuN6i_9t/s1920/Bg-01.webp)] min-h-screen">
+      <body className="bg-white bg-fixed bg-center bg-no-repeat bg-cover bg-[url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj2FvzqyWshUu4xMj5QkCPh6NNWPUyN1dzE8TThiXWuiQyJvjlN0P7p41gqQhOW9nJM7LYXb2zWdKSVZrexvV0rUkk1JlRz8N5wLQiT2SW2sD7tnt0X48usAiws5SKGguXd-HH3pd4h0KXwJ5NN6aqWopJgLYSslo7W1pF7OR3z1fDCfW7jjs-PkuN6i_9t/s1920/Bg-01.webp)] min-h-screen">
         <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>
