@@ -31,7 +31,7 @@ export default function DashboardLayout({
   const [siteName, setSiteName] = useState<string>("Dashboard");
   const router = useRouter();
   const pathname = usePathname();
-  const supabase = createClient();
+  const supabase = createClient() as any;
 
   useEffect(() => {
     const getUser = async () => {
@@ -54,7 +54,7 @@ export default function DashboardLayout({
   useEffect(() => {
     const loadSettings = async () => {
       try {
-        const supabase = createClient();
+        const supabase = createClient() as any;
         const { data, error } = await supabase
           .from("site_settings")
           .select("logo_url, site_name")

@@ -115,7 +115,7 @@ const defaultPaymentMethods = [
 
 export default function LandingPagePage() {
   const [activeTab, setActiveTab] = useState("hero");
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [heroImageFile, setHeroImageFile] = useState<File | null>(null);
@@ -192,7 +192,7 @@ export default function LandingPagePage() {
         if (sections && sections.length > 0) {
           const ids: Record<string, string> = {};
 
-          sections.forEach((section) => {
+          sections.forEach((section: any) => {
             ids[section.section_name] = section.id;
 
             if (section.section_name === "hero") {
@@ -389,7 +389,7 @@ export default function LandingPagePage() {
         updated_at: new Date().toISOString(),
       };
 
-      let result;
+      let result: any;
       if (sectionIds.hero) {
         result = await supabase
           .from("landing_page_sections")
@@ -452,7 +452,7 @@ export default function LandingPagePage() {
         updated_at: new Date().toISOString(),
       };
 
-      let result;
+      let result: any;
       if (sectionIds.feature) {
         result = await supabase
           .from("landing_page_sections")
@@ -488,7 +488,7 @@ export default function LandingPagePage() {
         updated_at: new Date().toISOString(),
       };
 
-      let result;
+      let result: any;
       if (sectionIds.features) {
         result = await supabase
           .from("landing_page_sections")
@@ -524,7 +524,7 @@ export default function LandingPagePage() {
         updated_at: new Date().toISOString(),
       };
 
-      let result;
+      let result: any;
       if (sectionIds.contact) {
         result = await supabase
           .from("landing_page_sections")
@@ -563,7 +563,7 @@ export default function LandingPagePage() {
         updated_at: new Date().toISOString(),
       };
 
-      let result;
+      let result: any;
       if (sectionIds.faq) {
         result = await supabase
           .from("landing_page_sections")

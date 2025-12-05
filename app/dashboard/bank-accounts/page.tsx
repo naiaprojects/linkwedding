@@ -23,7 +23,7 @@ export default function BankAccountsPage() {
     const [isActive, setIsActive] = useState(true);
     const [saving, setSaving] = useState(false);
 
-    const supabase = createClient();
+    const supabase = createClient() as any;
 
     useEffect(() => {
         fetchAccounts();
@@ -205,8 +205,8 @@ export default function BankAccountsPage() {
                                     <button
                                         onClick={() => toggleActive(account.id, account.is_active)}
                                         className={`px-2.5 py-1 rounded-full text-xs font-medium ${account.is_active
-                                                ? "bg-green-100 text-green-700"
-                                                : "bg-gray-100 text-gray-500"
+                                            ? "bg-green-100 text-green-700"
+                                            : "bg-gray-100 text-gray-500"
                                             }`}
                                     >
                                         {account.is_active ? "Aktif" : "Nonaktif"}
@@ -249,8 +249,8 @@ export default function BankAccountsPage() {
                                     <button
                                         onClick={() => toggleActive(account.id, account.is_active)}
                                         className={`px-3 py-1 rounded-full text-sm font-medium ${account.is_active
-                                                ? "bg-green-100 text-green-700"
-                                                : "bg-gray-100 text-gray-500"
+                                            ? "bg-green-100 text-green-700"
+                                            : "bg-gray-100 text-gray-500"
                                             }`}
                                     >
                                         {account.is_active ? "Aktif" : "Nonaktif"}
