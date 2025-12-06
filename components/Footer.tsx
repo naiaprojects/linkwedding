@@ -57,11 +57,11 @@ const Footer = () => {
 
   return (
     <footer>
-      <div className="flex flex-col mx-3 bg-white rounded-lg">
+      <div className="flex flex-col bg-slate-200 border-t-4 border-primary">
         <div className="w-full">
           <div className="container flex flex-col mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col items-center w-full my-12 lg:my-20">
-              <span className="mb-8">
+            <div className="flex flex-col items-center w-full mt-12 lg:mt-20">
+              <span className="mb-14">
                 {logoUrl ? (
                   <img src={logoUrl} alt="Logo" className="h-10 sm:h-12 w-auto" />
                 ) : (
@@ -85,13 +85,13 @@ const Footer = () => {
 
               <div className="flex items-center text-center">
                 <p className="text-sm sm:text-base font-normal leading-7 text-slate-700">
-                  {new Date().getFullYear()} {siteName}. All rights reserved.
+                  Copyright © {new Date().getFullYear()} {siteName}. All rights reserved.
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <div className="flex flex-wrap -mx-3 my-5">
+        <div className="flex flex-wrap -mx-3 mt-5 py-3 bg-slate-300">
           <div className="w-full max-w-full sm:w-3/4 mx-auto text-center px-4">
             <p className="text-xs sm:text-sm text-slate-500 py-1 flex flex-wrap gap-1 justify-center items-center">
               <span>Developed & Designed by</span>

@@ -114,7 +114,7 @@ export default function ProductDetailPage() {
     const currentPackage = product.packages?.[selectedPackage];
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-24">
+        <div className="min-h-screen py-24">
             <div className="container mx-auto px-4">
                 {/* Breadcrumb */}
                 <button
