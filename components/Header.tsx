@@ -72,8 +72,8 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white tracking-wide relative z-50">
-      <section className="bg-primary flex items-center lg:justify-center flex-wrap gap-5 relative py-3 sm:px-10 px-4 border-b border-gray-300 lg:min-h-[75px] max-lg:min-h-[60px]">
+    <header className="bg-primary/20 tracking-wide relative z-50">
+      <section className="bg-primary flex items-center lg:justify-center flex-wrap gap-5 relative py-3 sm:px-10 px-4 lg:min-h-[75px] max-lg:min-h-[60px]">
         <Link href="/">
           {logoUrl ? (
             <img
@@ -119,12 +119,12 @@ export default function Header() {
         >
           <button
             id="toggleClose"
-            className="lg:hidden fixed top-2 right-4 z-[100] rounded-full bg-white w-9 h-9 flex items-center justify-center border border-gray-200 cursor-pointer"
+            className="lg:hidden fixed top-2 right-4 z-[100] rounded-full bg-primary w-9 h-9 flex items-center justify-center cursor-pointer"
             onClick={toggleMenu}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-3.5 h-3.5 fill-primary text-primary"
+              className="w-3.5 h-3.5 fill-white text-white"
               viewBox="0 0 320.591 320.591"
             >
               <path
@@ -171,7 +171,7 @@ export default function Header() {
             onClick={toggleMenu}
           >
             <svg
-              className="w-7 h-7 text-primary"
+              className="w-7 h-7 text-white"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
