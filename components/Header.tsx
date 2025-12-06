@@ -151,9 +151,8 @@ export default function Header() {
               </Link>
             </li>
             {navLinks.map((link) => (
-              <li className="max-lg:border-b max-lg:border-gray-300 max-lg:py-3">
+              <li key={link.id} className="max-lg:border-b max-lg:border-gray-300 max-lg:py-3">
                 <Link
-                  key={link.id}
                   href={link.url}
                   className="hover:text-primary text-primary/80 font-medium text-[15px] block"
                 >
