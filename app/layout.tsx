@@ -48,7 +48,7 @@ export default async function RootLayout({
           <meta key={name} name={name} content={content} />
         ))}
       </head>
-      <body className="bg-white bg-fixed bg-center bg-no-repeat bg-cover bg-wedding-pattern min-h-screen">
+      <body className="bg-slate-100 bg-fixed bg-center bg-no-repeat bg-cover bg-wedding-pattern min-h-screen">
         <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>

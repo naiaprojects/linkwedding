@@ -37,8 +37,8 @@ const Contact = ({ data }: { data: ContactData }) => {
   };
 
   return (
-    <div className="relative flex items-top justify-center py-12 lg:py-24 my-12 lg:my-24 bg-gradient-to-r from-primary/30 to-primary sm:items-center sm:pt-4">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-6 lg:my-12 w-full">
+    <section className="relative flex items-top justify-center py-12 lg:py-24 my-12 lg:my-24 bg-gradient-to-r from-primary/30 to-primary sm:items-center sm:pt-4">
+      <div className="max-w-6xl mx-auto px-8 sm:px-6 lg:px-8 my-6 lg:my-12 w-full">
         <div className="mt-4 lg:mt-8 overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-0">
             <div className="p-6 mr-0 md:mr-2 bg-white rounded-2xl shadow-md">
@@ -134,7 +134,7 @@ const Contact = ({ data }: { data: ContactData }) => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

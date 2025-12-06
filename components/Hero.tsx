@@ -22,7 +22,7 @@ const Hero = ({ data }: { data: HeroData | undefined }) => {
 
   return (
     <section
-      className="z-0 relative max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-24 mx-auto flex flex-wrap min-h-screen items-center"
+      className="z-0 relative max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-24 mx-auto flex flex-col-reverse md:flex-wrap min-h-screen items-center"
       id="hero"
     >
       <div className="w-full lg:w-7/12 mb-10 lg:mb-0">

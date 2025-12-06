@@ -56,7 +56,7 @@ const Footer = () => {
   }, [supabase]);
 
   return (
-    <footer className="bg-white">
+    <footer>
       <div className="flex flex-col mx-3 bg-white rounded-lg">
         <div className="w-full">
           <div className="container flex flex-col mx-auto px-4 sm:px-6 lg:px-8">

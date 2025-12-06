@@ -86,7 +86,7 @@ const FAQ = ({ data }: { data: FAQData }) => {
 
   return (
     <section
-      className="bg-white w-full max-w-4xl px-4 sm:px-6 mx-auto py-12 lg:py-24 dark:bg-transparent dark:text-gray-200"
+      className="w-full max-w-4xl px-6 mx-auto py-12 lg:py-24 dark:bg-transparent dark:text-gray-200"
       id="faq"
     >
       <h3 className="mt-3 text-3xl sm:text-4xl font-bold text-primary text-center sm:text-left">
