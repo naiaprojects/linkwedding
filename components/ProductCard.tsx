@@ -44,29 +44,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
               target.src = "/placeholder-product.png";
             }}
           />
-          {product.packages && product.packages.length > 0 && (
-            <div className="absolute top-3 left-3 flex flex-wrap gap-1">
-              {product.packages.map((pkg, idx) => (
-                <span
-                  key={idx}
-                  className="text-xs px-2 py-1 bg-white/90 backdrop-blur-sm text-primary rounded-full font-medium"
-                >
-                  {pkg.name}
-                </span>
-              ))}
-            </div>
-          )}
-          {product.demo_url && (
-            <a
-              href={product.demo_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-primary hover:text-white transition-colors"
-            >
-              <EyeIcon className="w-5 h-5" />
-            </a>
-          )}
         </div>
       </Link>
 
@@ -84,30 +61,37 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
         <div className="mt-3 flex items-center justify-between">
           <div>
-            <span className="text-xl font-bold text-primary">
-              {formatPrice(lowestPrice)}
+            <span className="text-sm text-gray-400 ml-1">
+              Harga Mulai dari
             </span>
-            {product.packages && product.packages.length > 1 && lowestPrice !== highestPrice && (
-              <span className="text-sm text-gray-400 ml-1">
-                - {formatPrice(highestPrice)}
-              </span>
-            )}
+
           </div>
-          {product.category && (
-            <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-full">
-              {product.category}
-            </span>
-          )}
+          <span className="text-xl font-bold text-primary">
+            {formatPrice(lowestPrice)}
+          </span>
         </div>
       </div>
 
-      <div className="px-4 pb-4">
+      <div className="px-4 pb-4 flex justify-between">
         <Link
           href={`/products/${product.id}`}
-          className="block w-full text-center py-2.5 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors"
+          className="block text-center py-2 px-4 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors"
         >
-          Lihat Detail
+          Detail
         </Link>
+
+
+        {product.demo_url && (
+          <Link
+            href={product.demo_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="block text-center py-2 px-4 bg-white text-primary border-2 border-primary font-medium rounded-lg hover:border-primary/90 transition-colors"
+          >
+            Demo
+          </Link>
+        )}
       </div>
     </article>
   );
