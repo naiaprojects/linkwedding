@@ -1,7 +1,7 @@
-// const withPWA = require("next-pwa")({
-//   dest: "public",
-//   disable: process.env.NODE_ENV === "development",
-// });
+const withPWA = require("next-pwa")({
+  dest: "public",
+  disable: process.env.NODE_ENV === "development",
+});
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
@@ -13,5 +13,4 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
 };
-// module.exports = withPWA(nextConfig);
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);

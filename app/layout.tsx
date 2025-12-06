@@ -2,9 +2,13 @@
 import "./globals.css";
 import RootLayoutClient from "./RootLayoutClient";
 import { createClient } from "@/lib/supabase/server";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 const SETTINGS_ID = "00000000-0000-0000-0000-000000000000";
+
+export const viewport: Viewport = {
+  themeColor: "#0d9488",
+};
 
 // === DINAMIS METADATA ===
 export async function generateMetadata(): Promise<Metadata> {
@@ -15,11 +19,13 @@ export async function generateMetadata(): Promise<Metadata> {
     .eq("id", SETTINGS_ID)
     .single();
 
+
   return {
     title: data?.meta_title || data?.site_name || "LinkWedding",
     description:
       data?.meta_description || "Platform undangan pernikahan digital",
     keywords: data?.meta_keywords?.join(", ") || undefined,
+    manifest: "/manifest.json",
   };
 }
 
