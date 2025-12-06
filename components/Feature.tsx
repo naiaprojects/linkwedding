@@ -49,7 +49,7 @@ const Feature = ({ data }: { data: FeatureData }) => {
   const paymentMethods = data?.payment_methods || defaultPaymentMethods;
 
   return (
-    <section className="max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-24 mx-auto flex flex-col-reverse lg:flex-row-reverse items-center gap-10">
+    <section className="max-w-7xl px-6 sm:px-6 lg:px-8 py-12 lg:py-24 mx-auto flex flex-col-reverse lg:flex-row-reverse items-center gap-10">
       <div className="w-full lg:w-7/12">
         <div className="container mx-auto h-full">
           <div className="flex items-center h-full">
