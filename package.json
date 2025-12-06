@@ -35,7 +35,6 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.0.7",
-    "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/typography": "^0.5.19",
     "@types/react": "^18",
     "@types/react-dom": "^18",
