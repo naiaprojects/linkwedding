@@ -22,10 +22,10 @@ const Hero = ({ data }: { data: HeroData | undefined }) => {
 
   return (
     <section
-      className="z-0 relative max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-24 mx-auto flex flex-col-reverse md:flex-wrap min-h-screen items-center"
+      className="z-0 relative max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-24 mx-auto flex flex-col-reverse md:flex-row md:flex-wrap min-h-screen items-center"
       id="hero"
     >
-      <div className="w-full lg:w-7/12 mb-10 lg:mb-0">
+      <div className="w-full md:w-7/12 mb-10 md:mb-0">
         <div className="container mx-auto h-full">
           <div className="flex items-center h-full">
             <div className="w-full">
@@ -69,7 +69,7 @@ const Hero = ({ data }: { data: HeroData | undefined }) => {
         </div>
       </div>
 
-      <div className="w-full lg:w-5/12">
+      <div className="w-full md:w-5/12">
         {data?.image_url ? (
           <img
             alt="Wedding Invitation Mockup"
