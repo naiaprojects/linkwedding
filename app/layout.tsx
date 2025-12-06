@@ -48,7 +48,7 @@ export default async function RootLayout({
           <meta key={name} name={name} content={content} />
         ))}
       </head>
-      <body className="bg-slate-100 bg-fixed bg-center bg-no-repeat bg-cover bg-[url('/bg.jpg')] min-h-screen">
+      <body className="bg-slate-100 bg-fixed bg-center bg-no-repeat bg-cover bg-[url('https://kacfrxzjryuxnrhbkifu.supabase.co/storage/v1/object/public/public/hero-images/Bg.jpg')] min-h-screen">
         <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>
