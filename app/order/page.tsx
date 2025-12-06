@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Product, ProductPackage } from "@/types/product";
 import { BankAccount } from "@/types/bank";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import LogoLoader from "@/components/LogoLoader";
 
 export default function OrderPage() {
     const [product, setProduct] = useState<Product | null>(null);
@@ -164,7 +165,7 @@ export default function OrderPage() {
                 .from("orders")
                 .insert(orderData)
                 .select()
-                .single();
+                .single<any>();
 
             if (error) throw error;
 
@@ -183,7 +184,7 @@ export default function OrderPage() {
             <div className="min-h-screen bg-gray-50 py-24">
                 <div className="container mx-auto px-4">
                     <div className="flex justify-center items-center h-64">
-                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+                        <LogoLoader className="w-12 h-12" />
                     </div>
                 </div>
             </div>
@@ -231,8 +232,8 @@ export default function OrderPage() {
                                                 setDiscountApplied(false);
                                             }}
                                             className={`flex-1 px-6 py-4 font-medium text-sm transition-colors ${selectedPackageIndex === index
-                                                    ? "bg-primary text-white"
-                                                    : "text-gray-600 hover:bg-gray-50"
+                                                ? "bg-primary text-white"
+                                                : "text-gray-600 hover:bg-gray-50"
                                                 }`}
                                         >
                                             {pkg.name}

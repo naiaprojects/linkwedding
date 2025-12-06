@@ -171,7 +171,7 @@ export default function Header() {
             onClick={toggleMenu}
           >
             <svg
-              className="w-7 h-7 text-white"
+              className="w-7 h-7 text-primary"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"

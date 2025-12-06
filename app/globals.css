@@ -16,4 +16,19 @@
   .animate-slide-up {
     animation: slide-up 0.3s ease-out;
   }
+  
+  .stroke-draw {
+    stroke-dasharray: 4000;
+    stroke-dashoffset: 4000;
+    animation: draw 2s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes draw {
+  0% {
+    stroke-dashoffset: 4000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
 }

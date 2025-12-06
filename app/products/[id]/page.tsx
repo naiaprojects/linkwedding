@@ -78,7 +78,7 @@ export default function ProductDetailPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 py-24">
+            <div className="min-h-screen py-12">
                 <div className="container mx-auto px-4">
                     <div className="animate-pulse">
                         <div className="h-8 bg-gray-200 rounded w-32 mb-8"></div>
@@ -114,7 +114,7 @@ export default function ProductDetailPage() {
     const currentPackage = product.packages?.[selectedPackage];
 
     return (
-        <div className="min-h-screen py-24">
+        <div className="min-h-screen py-12">
             <div className="container mx-auto px-4">
                 {/* Breadcrumb */}
                 <button
@@ -125,9 +125,9 @@ export default function ProductDetailPage() {
                     Kembali
                 </button>
 
-                <div className="grid lg:grid-cols-2 gap-12">
+                <div className="flex flex-col lg:flex-row gap-6">
                     {/* Product Image */}
-                    <div className="relative">
+                    <div className="relative w-full w-1/2">
                         <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100 border border-gray-200">
                             <img
                                 src={product.image_url || "/placeholder-product.png"}
@@ -143,7 +143,7 @@ export default function ProductDetailPage() {
                     </div>
 
                     {/* Product Info */}
-                    <div>
+                    <div className="w-full w-1/2">
                         <h1 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-2">
                             {product.name}
                         </h1>
@@ -161,32 +161,20 @@ export default function ProductDetailPage() {
                         )}
 
                         {/* Action Buttons */}
-                        <div className="flex flex-wrap gap-3 mb-8">
+                        <div className="flex flex-col md:flex-row gap-3 mb-8">
                             <a
                                 href={generateWhatsAppLink()}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-6 py-3 bg-green-500 text-white font-medium rounded-xl hover:bg-green-600 transition-colors"
+                                className="inline-flex w-full md:w-1/3 items-center gap-2 px-6 py-3 bg-white border-2 border-primary text-primary font-medium rounded-xl hover:border-primary/40 transition-colors"
                             >
                                 <ChatBubbleLeftRightIcon className="w-5 h-5" />
                                 Konsultasi
                             </a>
 
-                            {product.demo_url && (
-                                <a
-                                    href={product.demo_url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 px-6 py-3 bg-primary/10 text-primary font-medium rounded-xl hover:bg-primary/20 transition-colors"
-                                >
-                                    <EyeIcon className="w-5 h-5" />
-                                    Lihat Demo
-                                </a>
-                            )}
-
                             <Link
                                 href={`/order?product=${product.id}&package=${selectedPackage}`}
-                                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary/90 transition-colors"
+                                className="inline-flex w-full md:w-1/3 items-center gap-2 px-6 py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary/60 transition-colors"
                             >
                                 <ShoppingCartIcon className="w-5 h-5" />
                                 Pesan Sekarang
@@ -217,46 +205,46 @@ export default function ProductDetailPage() {
                         {currentPackage && (
                             <div className="bg-white rounded-2xl border border-gray-200 p-6">
                                 <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                                    Detail Produk ({currentPackage.name})
+                                    Detail Paket ({currentPackage.name})
                                 </h3>
-                                <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-                                    <div>
+                                <div className="flex flex-wrap gap-y-4">
+                                    <div className="w-full md:w-1/2">
                                         <p className="text-sm text-gray-400">Jenis</p>
                                         <p className="font-medium text-primary">
                                             {product.jenis || "-"}
                                         </p>
                                     </div>
-                                    <div>
+                                    <div className="w-full md:w-1/2">
                                         <p className="text-sm text-gray-400">Kategori</p>
                                         <p className="font-medium text-primary">
                                             {product.category || "-"}
                                         </p>
                                     </div>
-                                    <div>
+                                    <div className="w-full md:w-1/2">
                                         <p className="text-sm text-gray-400">Design</p>
                                         <p className="font-medium text-primary">
                                             {product.design || "-"}
                                         </p>
                                     </div>
-                                    <div>
+                                    <div className="w-full md:w-1/2">
                                         <p className="text-sm text-gray-400">Undangan</p>
                                         <p className="font-medium text-primary">
                                             {currentPackage.undangan || "-"}
                                         </p>
                                     </div>
-                                    <div>
+                                    <div className="w-full md:w-1/2">
                                         <p className="text-sm text-gray-400">Foto</p>
                                         <p className="font-medium text-primary">
                                             {currentPackage.foto || "-"}
                                         </p>
                                     </div>
-                                    <div>
+                                    <div className="w-full md:w-1/2">
                                         <p className="text-sm text-gray-400">Video</p>
                                         <p className="font-medium text-primary">
                                             {currentPackage.video || "-"}
                                         </p>
                                     </div>
-                                    <div className="col-span-2">
+                                    <div className="w-full md:w-1/2">
                                         <p className="text-sm text-gray-400">Share</p>
                                         <p className="font-medium text-primary">
                                             {currentPackage.share || "-"}

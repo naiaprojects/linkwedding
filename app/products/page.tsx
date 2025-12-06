@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import ProductCard from "@/components/ProductCard";
+import LogoLoader from "@/components/LogoLoader";
 import { Product } from "@/types/product";
 import { useRouter, useSearchParams } from "next/navigation";
 import { MagnifyingGlassIcon, FunnelIcon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -53,7 +54,7 @@ export default function ProductsPage() {
       }
 
       if (design) {
-        query = query.eq("design", design);
+        query = query.ilike("design", design);
       }
 
       if (search) {
@@ -136,7 +137,7 @@ export default function ProductsPage() {
   const hasActiveFilters = selectedCategory || selectedDesign || searchTerm;
 
   return (
-    <div className="bg-gradient-to-b from-gray-50 to-white py-16">
+    <div className="py-12">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
@@ -290,7 +291,7 @@ export default function ProductsPage() {
 
             {loading ? (
               <div className="flex justify-center items-center h-64">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+                <LogoLoader className="w-32 h-32" />
               </div>
             ) : products.length === 0 ? (
               <div className="text-center py-16 bg-white rounded-2xl border border-gray-200">

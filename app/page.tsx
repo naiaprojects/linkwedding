@@ -8,6 +8,7 @@ import FeatureList from "@/components/FeatureList";
 import Products from "@/components/Products";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
+import LogoLoader from "@/components/LogoLoader";
 
 export default function HomePage() {
   const supabase = createClient();
@@ -25,7 +26,8 @@ export default function HomePage() {
 
         const { data: sections, error } = await supabase
           .from("landing_page_sections")
-          .select("*");
+          .select("*")
+          .returns<any[]>();
 
         if (error) {
           console.error("Supabase error:", error);
@@ -60,7 +62,7 @@ export default function HomePage() {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+        <LogoLoader className="w-32 h-32" />
       </div>
     );
   }

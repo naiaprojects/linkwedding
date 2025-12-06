@@ -117,7 +117,7 @@ const Products = () => {
   }, []);
 
   return (
-    <section id="products" className="px-6 py-12 lg:py-24">
+    <section id="products" className="px-4 py-12 lg:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 lg:mb-12">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
