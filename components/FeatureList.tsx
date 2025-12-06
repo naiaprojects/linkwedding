@@ -27,18 +27,18 @@ const FeatureList = ({ data }: { data: FeatureData }) => {
   const features = data?.features || defaultFeatures;
 
   return (
-    <section className="max-w-7xl mx-auto w-full py-24 px-8" id="featurelist">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl lg:text-6xl font-bold text-primary mb-8">
+    <section className="max-w-7xl mx-auto w-full py-12 lg:py-24 px-4 sm:px-6 lg:px-8" id="featurelist">
+      <div className="text-center mb-8 lg:mb-12">
+        <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-primary mb-4 lg:mb-8">
           {data?.title || "Fitur"}{" "}
           <span className="text-secondary">Unggulan</span>
         </h1>
         <div className="w-20 h-2 bg-primary my-4 mx-auto"></div>
       </div>
 
-      <ul className="flex flex-wrap text-sm font-medium text-gray-700 sm:text-base md:mx-auto md:max-w-5xl mt-8 pt-12">
+      <ul className="flex flex-wrap text-sm font-medium text-gray-700 sm:text-base md:mx-auto md:max-w-5xl mt-6 lg:mt-8 pt-4 lg:pt-12">
         {features.map((feature, index) => (
-          <li key={index} className="my-4 flex w-1/2 md:w-1/3 items-center">
+          <li key={index} className="my-2 lg:my-4 flex w-full sm:w-1/2 md:w-1/3 items-center px-2">
             <svg
               className="mr-2 flex-shrink-0 text-primary"
               fill="currentColor"

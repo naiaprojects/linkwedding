@@ -59,23 +59,23 @@ const Footer = () => {
     <footer className="bg-white">
       <div className="flex flex-col mx-3 bg-white rounded-lg">
         <div className="w-full">
-          <div className="container flex flex-col mx-auto">
-            <div className="flex flex-col items-center w-full my-20">
+          <div className="container flex flex-col mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col items-center w-full my-12 lg:my-20">
               <span className="mb-8">
                 {logoUrl ? (
-                  <img src={logoUrl} alt="Logo" className="h-12 w-auto" />
+                  <img src={logoUrl} alt="Logo" className="h-10 sm:h-12 w-auto" />
                 ) : (
-                  <div className="h-12 w-12 bg-gray-200 rounded"></div>
+                  <div className="h-10 sm:h-12 w-10 sm:w-12 bg-gray-200 rounded"></div>
                 )}
               </span>
 
-              <div className="flex flex-col items-center gap-6 mb-8">
-                <div className="flex flex-wrap items-center justify-center gap-5 lg:gap-12 gap-y-3 lg:flex-nowrap text-dark-slate-900">
+              <div className="flex flex-col items-center gap-6 mb-8 w-full">
+                <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 lg:gap-12 text-sm sm:text-base text-dark-slate-900">
                   {footerLinks.map((link) => (
                     <Link
                       key={link.id}
                       href={link.url}
-                      className="text-slate-600 hover:text-slate-900"
+                      className="text-slate-600 hover:text-slate-900 transition-colors"
                     >
                       {link.title}
                     </Link>
@@ -83,8 +83,8 @@ const Footer = () => {
                 </div>
               </div>
 
-              <div className="flex items-center">
-                <p className="text-base font-normal leading-7 text-center text-slate-700">
+              <div className="flex items-center text-center">
+                <p className="text-sm sm:text-base font-normal leading-7 text-slate-700">
                   {new Date().getFullYear()} {siteName}. All rights reserved.
                 </p>
               </div>
@@ -92,12 +92,12 @@ const Footer = () => {
           </div>
         </div>
         <div className="flex flex-wrap -mx-3 my-5">
-          <div className="w-full max-w-full sm:w-3/4 mx-auto text-center">
-            <p className="text-sm text-slate-500 py-1 flex gap-1 justify-center">
+          <div className="w-full max-w-full sm:w-3/4 mx-auto text-center px-4">
+            <p className="text-xs sm:text-sm text-slate-500 py-1 flex flex-wrap gap-1 justify-center items-center">
               <span>Developed & Designed by</span>
               <a
                 href="https://www.naia.web.id"
-                className="text-slate-700 hover:text-slate-900"
+                className="text-slate-700 hover:text-slate-900 font-medium"
                 target="_blank"
                 rel="noopener noreferrer"
               >

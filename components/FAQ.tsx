@@ -78,21 +78,21 @@ const FAQItem = ({ item }: { item: FAQItem }) => {
 const FAQ = ({ data }: { data: FAQData }) => {
   const faqItems = data?.faqs
     ? data.faqs.map((faq, index) => ({
-        id: `faq-${index + 1}`,
-        question: faq.question,
-        answer: faq.answer,
-      }))
+      id: `faq-${index + 1}`,
+      question: faq.question,
+      answer: faq.answer,
+    }))
     : defaultFaqItems;
 
   return (
     <section
-      className="bg-white w-full max-w-4xl px-2 mx-auto py-12 dark:bg-transparent dark:text-gray-200"
+      className="bg-white w-full max-w-4xl px-4 sm:px-6 mx-auto py-12 lg:py-24 dark:bg-transparent dark:text-gray-200"
       id="faq"
     >
-      <h3 className="mt-3 text-4xl font-bold text-primary">
+      <h3 className="mt-3 text-3xl sm:text-4xl font-bold text-primary text-center sm:text-left">
         {data?.title || "Frequently Asked Questions"}
       </h3>
-      <div className="grid max-w-5xl mx-auto mt-6 divide-y divide-gray-200 dark:divide-gray-700 text-base text-slate-700">
+      <div className="grid max-w-5xl mx-auto mt-6 lg:mt-8 divide-y divide-gray-200 dark:divide-gray-700 text-base text-slate-700">
         {faqItems.map((item) => (
           <FAQItem key={item.id} item={item} />
         ))}

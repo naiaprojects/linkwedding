@@ -114,13 +114,13 @@ const Products = () => {
   }, []);
 
   return (
-    <section id="products" className="bg-gradient-to-b from-white to-gray-50 py-24">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
+    <section id="products" className="bg-gradient-to-b from-white to-gray-50 py-12 lg:py-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-8 lg:mb-12">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
             Produk <span className="text-primary">Unggulan</span>
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
             Mudah diakses, hemat biaya, dan banyak metode pembayarannya!
           </p>
         </div>
@@ -131,16 +131,16 @@ const Products = () => {
           </div>
         ) : (
           <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {products.map((product) => (
                 <ProductCardHome key={product.id} product={product} />
               ))}
             </div>
 
-            <div className="mt-12 text-center">
+            <div className="mt-8 lg:mt-12 text-center">
               <Link
                 href="/products"
-                className="inline-block px-8 py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary/90 transition-colors"
+                className="inline-block px-8 py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary/90 transition-colors w-full sm:w-auto"
               >
                 Lihat Semua Produk
               </Link>

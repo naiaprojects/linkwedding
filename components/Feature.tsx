@@ -49,12 +49,12 @@ const Feature = ({ data }: { data: FeatureData }) => {
   const paymentMethods = data?.payment_methods || defaultPaymentMethods;
 
   return (
-    <section className="max-w-7xl px-4 sm:px-0 pt-16 mx-auto flex flex-col-reverse md:flex-row-reverse">
-      <div className="w-full sm:w-7/12 mb-10">
-        <div className="container mx-auto h-full sm:p-10">
-          <div className="container px-4 lg:flex mt-10 items-center h-full lg:mt-0">
+    <section className="max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-24 mx-auto flex flex-col-reverse lg:flex-row-reverse items-center gap-10">
+      <div className="w-full lg:w-7/12">
+        <div className="container mx-auto h-full">
+          <div className="flex items-center h-full">
             <div className="w-full">
-              <h1 className="text-4xl lg:text-6xl font-bold text-primary">
+              <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-primary">
                 {data?.title || "Kenapa harus di"}{" "}
                 <span className="text-secondary">
                   {data?.subtitle || "linkwedding.id?"}
@@ -62,13 +62,13 @@ const Feature = ({ data }: { data: FeatureData }) => {
               </h1>
               <div className="w-20 h-2 bg-secondary my-4"></div>
 
-              <p className="text-xl mb-10 text-primary">
+              <p className="text-base sm:text-xl mb-10 text-primary">
                 {data?.description ||
                   "Mudah diakses, hemat biaya, dan banyak metode pembayarannya!"}
               </p>
 
-              <div className="mt-12 flex flex-col gap-6">
-                <div className="flex flex-wrap items-center gap-8">
+              <div className="mt-8 lg:mt-12 flex flex-col gap-6">
+                <div className="flex flex-wrap items-center gap-6 sm:gap-8">
                   {paymentMethods.map((method, index) => (
                     <div
                       key={index}
@@ -76,7 +76,7 @@ const Feature = ({ data }: { data: FeatureData }) => {
                     >
                       <img
                         alt={method.alt_text}
-                        className="h-7 w-auto"
+                        className="h-6 sm:h-7 w-auto"
                         src={method.image_url}
                       />
                     </div>
@@ -87,18 +87,18 @@ const Feature = ({ data }: { data: FeatureData }) => {
           </div>
         </div>
       </div>
-      <div className="w-full sm:w-5/12">
+      <div className="w-full lg:w-5/12">
         {data?.image_url ? (
           <img
             alt="Fitur Linkwedding"
-            className="w-full"
+            className="w-full h-auto object-contain"
             src={data.image_url}
             title="Fitur Linkwedding"
           />
         ) : (
           <img
             alt="Fitur Linkwedding"
-            className="w-full"
+            className="w-full h-auto object-contain"
             src="https://wp.envelope.id/wp-content/uploads/2025/11/LP-V2-3.webp"
             title="Fitur Linkwedding"
           />
