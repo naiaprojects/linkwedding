@@ -136,7 +136,7 @@ export default function ProductsPage() {
   const hasActiveFilters = selectedCategory || selectedDesign || searchTerm;
 
   return (
-    <div className="bg-gradient-to-b from-gray-50 to-white min-h-screen py-24">
+    <div className="bg-gradient-to-b from-gray-50 to-white py-16">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
@@ -203,8 +203,8 @@ export default function ProductsPage() {
                   <button
                     onClick={() => handleCategoryChange("")}
                     className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${!selectedCategory
-                        ? "bg-primary text-white"
-                        : "bg-gray-50 text-gray-700 hover:bg-gray-100"
+                      ? "bg-primary text-white"
+                      : "bg-gray-50 text-gray-700 hover:bg-gray-100"
                       }`}
                   >
                     Semua Kategori
@@ -214,8 +214,8 @@ export default function ProductsPage() {
                       key={category}
                       onClick={() => handleCategoryChange(category)}
                       className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${selectedCategory === category
-                          ? "bg-primary text-white"
-                          : "bg-gray-50 text-gray-700 hover:bg-gray-100"
+                        ? "bg-primary text-white"
+                        : "bg-gray-50 text-gray-700 hover:bg-gray-100"
                         }`}
                     >
                       {category}
@@ -233,8 +233,8 @@ export default function ProductsPage() {
                   <button
                     onClick={() => handleDesignChange("")}
                     className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${!selectedDesign
-                        ? "bg-primary text-white"
-                        : "bg-gray-50 text-gray-700 hover:bg-gray-100"
+                      ? "bg-primary text-white"
+                      : "bg-gray-50 text-gray-700 hover:bg-gray-100"
                       }`}
                   >
                     Semua Design
@@ -244,8 +244,8 @@ export default function ProductsPage() {
                       key={design}
                       onClick={() => handleDesignChange(design)}
                       className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${selectedDesign === design
-                          ? "bg-primary text-white"
-                          : "bg-gray-50 text-gray-700 hover:bg-gray-100"
+                        ? "bg-primary text-white"
+                        : "bg-gray-50 text-gray-700 hover:bg-gray-100"
                         }`}
                     >
                       {design}
@@ -340,8 +340,8 @@ export default function ProductsPage() {
                             key={page}
                             onClick={() => handlePageChange(page)}
                             className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors ${currentPage === page
-                                ? "bg-primary text-white"
-                                : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50"
+                              ? "bg-primary text-white"
+                              : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50"
                               }`}
                           >
                             {page}

@@ -98,7 +98,7 @@ export default function ProductDetailPage() {
 
     if (!product) {
         return (
-            <div className="min-h-screen bg-gray-50 py-24">
+            <div className="bg-gray-50 py-16">
                 <div className="container mx-auto px-4 text-center">
                     <h1 className="text-2xl font-bold text-gray-800 mb-4">
                         Produk tidak ditemukan
@@ -202,8 +202,8 @@ export default function ProductDetailPage() {
                                             key={index}
                                             onClick={() => setSelectedPackage(index)}
                                             className={`px-6 py-3 font-medium text-sm border-b-2 transition-colors ${selectedPackage === index
-                                                    ? "border-primary text-primary"
-                                                    : "border-transparent text-gray-500 hover:text-gray-700"
+                                                ? "border-primary text-primary"
+                                                : "border-transparent text-gray-500 hover:text-gray-700"
                                                 }`}
                                         >
                                             {pkg.name}
