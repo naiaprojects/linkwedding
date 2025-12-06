@@ -98,7 +98,7 @@ export default function ProductDetailPage() {
 
     if (!product) {
         return (
-            <div className="bg-gray-50 py-16">
+            <div className="bg-gray-50 py-16 ">
                 <div className="container mx-auto px-4 text-center">
                     <h1 className="text-2xl font-bold text-gray-800 mb-4">
                         Produk tidak ditemukan
