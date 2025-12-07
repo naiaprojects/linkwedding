@@ -18,7 +18,9 @@ const Hero = ({ data }: { data: HeroData | undefined }) => {
     { label: "Ucapan Dikirim", value: "24" },
   ];
 
-  const stats = data?.stats || defaultStats;
+  const rawStats = data?.stats || defaultStats;
+  // Filter out stats that have no value or empty string value
+  const stats = rawStats.filter((s) => s.value && s.value.toString().trim() !== "");
 
   return (
     <section
@@ -47,23 +49,25 @@ const Hero = ({ data }: { data: HeroData | undefined }) => {
                   "Karena linkwedding.id menghadirkan solusi undangan pernikahan berbasis website yang nggak cuma keren, tapi juga sangat praktis."}
               </p>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 w-full min-w-0">
-                {stats.map((stat, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col px-4 py-3 sm:px-6 sm:py-4 bg-white shadow hover:shadow hover:shadow-primary rounded-lg overflow-hidden"
-                  >
-                    <div className="flex flex-col items-center space-y-1 text-center">
-                      <div className="text-2xl sm:text-3xl font-bold tracking-tight leading-none text-primary">
-                        {stat.value}
-                      </div>
-                      <div className="text-sm sm:text-md font-medium text-primary">
-                        {stat.label}
+              {stats.length > 0 && (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 w-full min-w-0">
+                  {stats.map((stat, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col px-4 py-3 sm:px-6 sm:py-4 bg-white shadow hover:shadow hover:shadow-primary rounded-lg overflow-hidden"
+                    >
+                      <div className="flex flex-col items-center space-y-1 text-center">
+                        <div className="text-2xl sm:text-3xl font-bold tracking-tight leading-none text-primary">
+                          {stat.value}
+                        </div>
+                        <div className="text-sm sm:text-md font-medium text-primary">
+                          {stat.label}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

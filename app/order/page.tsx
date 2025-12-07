@@ -374,28 +374,6 @@ export default function OrderPage() {
 
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-1">
-                                            Kode Diskon
-                                        </label>
-                                        <div className="flex gap-2">
-                                            <input
-                                                type="text"
-                                                value={discountCode}
-                                                onChange={(e) => setDiscountCode(e.target.value)}
-                                                placeholder="Masukkan kode"
-                                                className="flex-1 px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
-                                            />
-                                            <button
-                                                type="button"
-                                                onClick={applyDiscount}
-                                                className="px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-                                            >
-                                                Terapkan
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">
                                             Metode Pembayaran
                                         </label>
                                         {bankAccounts.length > 0 ? (
