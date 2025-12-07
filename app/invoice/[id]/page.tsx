@@ -247,6 +247,26 @@ export default function InvoicePage() {
         );
     }
 
+    const handleDownloadPDF = async () => {
+        const element = document.getElementById("invoice-content");
+        if (!element) return;
+
+        const opt = {
+            margin: 1,
+            filename: `Invoice-${order?.invoice_number}.pdf`,
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+        };
+
+        const html2pdf = (await import("html2pdf.js")).default;
+        html2pdf().set(opt).from(element).save();
+    };
+
+    const handlePrint = () => {
+        window.print();
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-24">
             <div className="container mx-auto px-4">
@@ -254,19 +274,35 @@ export default function InvoicePage() {
                     <h1 className="text-2xl lg:text-3xl font-bold text-primary">
                         Invoice #{order.invoice_number}
                     </h1>
-                    <div className="flex gap-2">
-                        <button className="inline-flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50">
+                    <div className="flex flex-wrap gap-2">
+                        <button
+                            onClick={handleDownloadPDF}
+                            className="inline-flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 text-sm"
+                        >
                             <ArrowDownTrayIcon className="w-5 h-5" />
-                            Unduh
+                            <span className="hidden sm:inline">Unduh</span>
                         </button>
-                        <button className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">
-                            Cetak
+                        <button
+                            onClick={handlePrint}
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 text-sm"
+                        >
+                            <span className="hidden sm:inline">Cetak</span>
+                            <span className="sm:hidden">Cetak</span>
                         </button>
+                        {order.payment_status === "pending" && (
+                            <Link
+                                href={`/invoice/${order.id}/confirm`}
+                                className="sm:hidden inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 text-sm"
+                            >
+                                <CheckCircleIcon className="w-5 h-5" />
+                                Konfirmasi
+                            </Link>
+                        )}
                     </div>
                 </div>
 
-                <div className="grid lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2">
+                <div className="grid lg:grid-cols-3 gap-8" id="invoice-content">
+                    <div className="lg:col-span-2 order-2 lg:order-1">
                         <div className="bg-white rounded-2xl border border-gray-200 p-6">
                             <div className="grid sm:grid-cols-2 gap-6 mb-8 pb-6 border-b border-gray-100">
                                 <div>
@@ -283,33 +319,51 @@ export default function InvoicePage() {
                                 </div>
                             </div>
 
-                            <table className="w-full mb-6">
-                                <thead>
-                                    <tr className="text-left text-sm text-gray-500 border-b border-gray-100">
-                                        <th className="pb-3 font-medium">PAKET</th>
-                                        <th className="pb-3 font-medium">HARGA</th>
-                                        <th className="pb-3 font-medium">DISKON</th>
-                                        <th className="pb-3 font-medium text-right">TOTAL HARGA</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td className="py-4">
-                                            <p className="font-semibold text-gray-800">{order.package_name}</p>
-                                            <p className="text-sm text-gray-500">{order.product_name}</p>
-                                        </td>
-                                        <td className="py-4 text-gray-700">
+                            {/* Package Details - Responsive Grid */}
+                            <div className="mb-6">
+                                {/* Desktop Headers */}
+                                <div className="hidden md:grid md:grid-cols-12 gap-4 text-sm text-gray-500 border-b border-gray-100 pb-3 font-medium">
+                                    <div className="md:col-span-4">PAKET</div>
+                                    <div className="md:col-span-3">HARGA</div>
+                                    <div className="md:col-span-2">DISKON</div>
+                                    <div className="md:col-span-3 text-right">TOTAL HARGA</div>
+                                </div>
+
+                                {/* Content */}
+                                <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-4 py-4 border-b border-gray-100 md:border-0">
+                                    {/* Paket Column */}
+                                    <div className="md:col-span-4">
+                                        <div className="font-semibold text-gray-800">
+                                            {order.package_name}
+                                        </div>
+                                        <div className="text-sm text-gray-500">
+                                            {order.product_name}
+                                        </div>
+                                    </div>
+
+                                    {/* Mobile/Desktop Data Columns */}
+                                    <div className="md:col-span-3 flex justify-between md:block">
+                                        <span className="text-gray-500 md:hidden">Harga:</span>
+                                        <span className="text-gray-700">
                                             {formatPrice(order.package_price)}
-                                        </td>
-                                        <td className="py-4 text-gray-700">
+                                        </span>
+                                    </div>
+
+                                    <div className="md:col-span-2 flex justify-between md:block">
+                                        <span className="text-gray-500 md:hidden">Diskon:</span>
+                                        <span className="text-gray-700">
                                             {order.discount_amount > 0 ? formatPrice(order.discount_amount) : formatPrice(0)}
-                                        </td>
-                                        <td className="py-4 text-right font-semibold text-primary">
+                                        </span>
+                                    </div>
+
+                                    <div className="md:col-span-3 flex justify-between md:block md:text-right">
+                                        <span className="text-gray-500 md:hidden">Total:</span>
+                                        <span className="font-semibold text-primary">
                                             {formatPrice(order.total)}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div className="border-t border-gray-100 pt-4 space-y-2">
                                 <div className="flex justify-between text-gray-600">
@@ -333,15 +387,15 @@ export default function InvoicePage() {
                             </div>
 
                             {order.payment_status === "pending" && (
-                                <div className="mt-6 p-4 bg-yellow-50 rounded-xl flex items-center justify-between">
+                                <div className="mt-6 p-4 bg-yellow-50 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                                     <div className="flex items-center gap-3">
-                                        <ClockIcon className="w-6 h-6 text-yellow-600" />
+                                        <ClockIcon className="w-6 h-6 text-yellow-600 shrink-0" />
                                         <div>
                                             <p className="font-medium text-gray-800">Batas Waktu Pembayaran</p>
                                             <p className="text-sm text-gray-600">Selesaikan pembayaran sebelum waktu habis</p>
                                         </div>
                                     </div>
-                                    <div className="text-2xl font-bold text-yellow-600">
+                                    <div className="text-2xl font-bold text-yellow-600 whitespace-nowrap self-end sm:self-auto">
                                         {String(countdown.hours).padStart(2, "0")} :{" "}
                                         {String(countdown.minutes).padStart(2, "0")} :{" "}
                                         {String(countdown.seconds).padStart(2, "0")}
@@ -349,14 +403,14 @@ export default function InvoicePage() {
                                 </div>
                             )}
 
-                            <div className="flex flex-wrap gap-3 mt-6 pt-6 border-t border-gray-100">
-                                <button className="inline-flex items-center gap-2 px-6 py-3 border border-gray-200 rounded-xl text-gray-700 hover:bg-gray-50">
+                            <div className="flex flex-col sm:flex-row gap-3 mt-6 pt-6 border-t border-gray-100">
+                                <button className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-200 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors w-full sm:w-auto">
                                     <ArrowDownTrayIcon className="w-5 h-5" />
                                     Unduh Invoice
                                 </button>
                                 <button
                                     onClick={copyLink}
-                                    className="inline-flex items-center gap-2 px-6 py-3 border border-gray-200 rounded-xl text-gray-700 hover:bg-gray-50"
+                                    className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-200 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors w-full sm:w-auto"
                                 >
                                     <ClipboardDocumentIcon className="w-5 h-5" />
                                     {copied ? "Tersalin!" : "Salin Tautan"}
@@ -364,14 +418,14 @@ export default function InvoicePage() {
                                 {order.payment_status === "pending" && (
                                     <Link
                                         href={`/invoice/${order.id}/confirm`}
-                                        className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary/90"
+                                        className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary/90 transition-colors w-full sm:w-auto"
                                     >
                                         <CheckCircleIcon className="w-5 h-5" />
                                         Konfirmasi Pembayaran
                                     </Link>
                                 )}
                                 {order.payment_status === "paid" && (
-                                    <span className="inline-flex items-center gap-2 px-6 py-3 bg-green-500 text-white font-medium rounded-xl">
+                                    <span className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-500 text-white font-medium rounded-xl w-full sm:w-auto">
                                         <CheckCircleIcon className="w-5 h-5" />
                                         Dibayar
                                     </span>
@@ -380,7 +434,7 @@ export default function InvoicePage() {
                         </div>
                     </div>
 
-                    <div className="lg:col-span-1">
+                    <div className="lg:col-span-1 order-1 lg:order-2">
                         <div className="bg-white rounded-2xl border border-gray-200 p-6 sticky top-24">
                             <div className="text-center mb-6">
                                 <p className="text-sm text-gray-500">Total Invoice:</p>

@@ -162,6 +162,13 @@ export default function ProductDetailPage() {
 
                         {/* Action Buttons */}
                         <div className="flex flex-col md:flex-row gap-3 mb-8">
+                            <Link
+                                href={`/order?product=${product.id}&package=${selectedPackage}`}
+                                className="inline-flex w-full md:w-1/3 items-center gap-2 px-6 py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary/60 transition-colors"
+                            >
+                                <ShoppingCartIcon className="w-5 h-5" />
+                                Pesan Sekarang
+                            </Link>
                             <a
                                 href={generateWhatsAppLink()}
                                 target="_blank"
@@ -171,14 +178,6 @@ export default function ProductDetailPage() {
                                 <ChatBubbleLeftRightIcon className="w-5 h-5" />
                                 Konsultasi
                             </a>
-
-                            <Link
-                                href={`/order?product=${product.id}&package=${selectedPackage}`}
-                                className="inline-flex w-full md:w-1/3 items-center gap-2 px-6 py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary/60 transition-colors"
-                            >
-                                <ShoppingCartIcon className="w-5 h-5" />
-                                Pesan Sekarang
-                            </Link>
                         </div>
 
                         {/* Package Tabs */}

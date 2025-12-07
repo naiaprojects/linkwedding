@@ -231,7 +231,7 @@ export default function OrderPage() {
                                                 setDiscountAmount(0);
                                                 setDiscountApplied(false);
                                             }}
-                                            className={`flex-1 px-6 py-4 font-medium text-sm transition-colors ${selectedPackageIndex === index
+                                            className={`flex-1 px-3 md:px-6 py-4 font-medium text-sm transition-colors ${selectedPackageIndex === index
                                                 ? "bg-primary text-white"
                                                 : "text-gray-600 hover:bg-gray-50"
                                                 }`}
@@ -241,45 +241,61 @@ export default function OrderPage() {
                                     ))}
                                 </div>
 
-                                {/* Package Details Table */}
-                                <div className="p-6">
-                                    <table className="w-full">
-                                        <thead>
-                                            <tr className="text-left text-sm text-gray-500 border-b border-gray-100">
-                                                <th className="pb-3 font-medium">PAKET</th>
-                                                <th className="pb-3 font-medium">DETAIL</th>
-                                                <th className="pb-3 font-medium text-right">HARGA</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td className="py-4">
-                                                    <div className="font-semibold text-gray-800">
-                                                        {currentPackage?.name}
-                                                    </div>
-                                                    <div className="text-sm text-gray-500 mt-2">
-                                                        <p>Fitur:</p>
-                                                        <ul className="list-disc list-inside text-primary mt-1 space-y-1">
-                                                            <li>{currentPackage?.undangan}</li>
-                                                            <li>{currentPackage?.foto}</li>
-                                                            <li>{currentPackage?.video}</li>
-                                                            <li>{currentPackage?.share}</li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                                <td className="py-4 text-gray-600">
-                                                    <div className="space-y-1 text-sm">
-                                                        <p>Jenis: {product.jenis || "-"}</p>
-                                                        <p>Kategori: {product.category || "-"}</p>
-                                                        <p>Design: {product.design || "-"}</p>
-                                                    </div>
-                                                </td>
-                                                <td className="py-4 text-right font-semibold text-primary">
+                                {/* Package Details Section */}
+                                <div className="p-4 md:p-6">
+                                    {/* Desktop Headers */}
+                                    <div className="hidden md:grid md:grid-cols-12 gap-4 text-sm text-gray-500 border-b border-gray-100 pb-3 font-medium">
+                                        <div className="md:col-span-4">PAKET</div>
+                                        <div className="md:col-span-5">DETAIL</div>
+                                        <div className="md:col-span-3 text-right">HARGA</div>
+                                    </div>
+
+                                    {/* Content Grid */}
+                                    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-4 py-4">
+                                        {/* Paket Column */}
+                                        <div className="md:col-span-4">
+                                            <div className="font-semibold text-gray-800 text-lg md:text-base">
+                                                {currentPackage?.name}
+                                            </div>
+                                            <div className="text-sm text-gray-500 mt-2">
+                                                <p className="font-medium mb-1">Fitur:</p>
+                                                <ul className="list-disc list-inside text-primary space-y-1">
+                                                    <li>{currentPackage?.undangan}</li>
+                                                    <li>{currentPackage?.foto}</li>
+                                                    <li>{currentPackage?.video}</li>
+                                                    <li>{currentPackage?.share}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        {/* Detail Column */}
+                                        <div className="md:col-span-5">
+                                            <div className="space-y-2 text-sm text-gray-600 bg-gray-50 p-4 rounded-xl md:bg-transparent md:p-0 md:rounded-none">
+                                                <div className="flex justify-between md:block">
+                                                    <span className="text-gray-500 md:hidden">Jenis:</span>
+                                                    <span className="text-right md:text-left">{product.jenis || "-"}</span>
+                                                </div>
+                                                <div className="flex justify-between md:block">
+                                                    <span className="text-gray-500 md:hidden">Kategori:</span>
+                                                    <span className="text-right md:text-left">{product.category || "-"}</span>
+                                                </div>
+                                                <div className="flex justify-between md:block">
+                                                    <span className="text-gray-500 md:hidden">Design:</span>
+                                                    <span className="text-right md:text-left">{product.design || "-"}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Harga Column */}
+                                        <div className="md:col-span-3">
+                                            <div className="flex justify-between items-center md:block md:text-right">
+                                                <span className="font-medium text-gray-500 md:hidden">Harga:</span>
+                                                <span className="text-xl md:text-lg font-bold text-primary">
                                                     {formatPrice(currentPackage?.price || 0)}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     {/* Price Breakdown */}
                                     <div className="border-t border-gray-100 mt-6 pt-6 space-y-3">
@@ -308,7 +324,7 @@ export default function OrderPage() {
 
                         {/* Right: Customer Form */}
                         <div className="lg:col-span-1">
-                            <div className="bg-white rounded-2xl border border-gray-200 p-6 sticky top-24">
+                            <div className="bg-white rounded-2xl border border-gray-200 p-4 md:p-6 sticky top-24">
                                 <h3 className="text-lg font-semibold text-gray-800 mb-6">
                                     Data Pelanggan
                                 </h3>

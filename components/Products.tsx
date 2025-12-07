@@ -93,19 +93,22 @@ const ProductCardHome = ({ product }: { product: Product }) => {
 const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(6);
+  const [totalCount, setTotalCount] = useState(0);
   const supabase = createClient();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data, error } = await supabase
+        const { data, count, error } = await supabase
           .from("products")
-          .select("*")
+          .select("*", { count: "exact" })
           .order("created_at", { ascending: false })
-          .limit(6);
+          .range(0, visibleCount - 1);
 
         if (error) throw error;
         setProducts(data || []);
+        if (count !== null) setTotalCount(count);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -114,7 +117,11 @@ const Products = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, [visibleCount]);
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 9);
+  };
 
   return (
     <section id="products" className="px-4 py-12 lg:py-24">
@@ -140,14 +147,16 @@ const Products = () => {
               ))}
             </div>
 
-            <div className="mt-8 lg:mt-12 text-center">
-              <Link
-                href="/products"
-                className="inline-block px-8 py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary/90 transition-colors w-full sm:w-auto"
-              >
-                Lihat Semua Produk
-              </Link>
-            </div>
+            {products.length < totalCount && (
+              <div className="mt-8 lg:mt-12 text-center">
+                <button
+                  onClick={handleLoadMore}
+                  className="inline-block px-8 py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary/90 transition-colors w-full sm:w-auto"
+                >
+                  Lihat Lebih Banyak
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
