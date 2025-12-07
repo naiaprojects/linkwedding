@@ -16,13 +16,14 @@ import {
 
 export default function InvoicePage() {
     const [order, setOrder] = useState<Order | null>(null);
-    const [bankAccount, setBankAccount] = useState<BankAccount | null>(null);
+    const [bankAccounts, setBankAccounts] = useState<BankAccount[]>([]);
     const [loading, setLoading] = useState(true);
     const [emailVerified, setEmailVerified] = useState(false);
     const [inputEmail, setInputEmail] = useState("");
     const [emailError, setEmailError] = useState("");
     const [countdown, setCountdown] = useState({ hours: 0, minutes: 0, seconds: 0 });
     const [copied, setCopied] = useState(false);
+    const [copiedAccountId, setCopiedAccountId] = useState<string | null>(null);
 
     const params = useParams();
     const router = useRouter();
@@ -31,7 +32,7 @@ export default function InvoicePage() {
 
     useEffect(() => {
         fetchOrder();
-        fetchBankAccount();
+        fetchBankAccounts();
     }, [orderId]);
 
     useEffect(() => {
@@ -84,20 +85,18 @@ export default function InvoicePage() {
         }
     };
 
-    const fetchBankAccount = async () => {
+    const fetchBankAccounts = async () => {
         try {
             const { data } = await supabase
                 .from("bank_accounts")
                 .select("*")
-                .eq("is_active", true)
-                .limit(1)
-                .single();
+                .eq("is_active", true);
 
             if (data) {
-                setBankAccount(data);
+                setBankAccounts(data);
             }
         } catch (error) {
-            console.error("Error fetching bank account:", error);
+            console.error("Error fetching bank accounts:", error);
         }
     };
 
@@ -468,28 +467,59 @@ export default function InvoicePage() {
                                 </div>
                             </div>
 
-                            <div className="border-t border-gray-100 mt-6 pt-6 space-y-3 text-sm">
-                                <div className="flex justify-between">
-                                    <span className="text-gray-500">Metode Pembayaran:</span>
-                                    <span className="font-medium text-gray-800">Bank</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="text-gray-500">Bank/E-wallet:</span>
-                                    <span className="font-medium text-gray-800">
-                                        {bankAccount?.bank_name || order.payment_bank || "-"}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="text-gray-500">No Akun/Rekening:</span>
-                                    <span className="font-medium text-gray-800">
-                                        {bankAccount?.account_number || "-"}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="text-gray-500">Atas Nama:</span>
-                                    <span className="font-medium text-gray-800">
-                                        {bankAccount?.account_name || "-"}
-                                    </span>
+                            <div className="mt-6 pt-6 border-t border-gray-100">
+                                <h3 className="font-bold text-gray-800 mb-4">Informasi Rekening Bank</h3>
+                                <div className="space-y-4">
+                                    {bankAccounts.map((bank) => (
+                                        <div
+                                            key={bank.id}
+                                            className="bg-slate-100 border border-slate-200 p-4 rounded-xl"
+                                        >
+                                            <div className="flex justify-between items-start mb-4">
+                                                <span className="font-bold text-primary text-lg">
+                                                    {bank.bank_name}
+                                                </span>
+                                                <button
+                                                    onClick={() => {
+                                                        navigator.clipboard.writeText(bank.account_number);
+                                                        setCopiedAccountId(bank.id);
+                                                        setTimeout(() => setCopiedAccountId(null), 2000);
+                                                    }}
+                                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors"
+                                                >
+                                                    {copiedAccountId === bank.id ? (
+                                                        <>
+                                                            <CheckCircleIcon className="w-4 h-4" />
+                                                            <span>Tersalin</span>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <ClipboardDocumentIcon className="w-4 h-4" />
+                                                            <span>Salin</span>
+                                                        </>
+                                                    )}
+                                                </button>
+                                            </div>
+                                            <div className="space-y-1">
+                                                <p className="text-sm text-gray-600">No. Rekening:</p>
+                                                <p className="font-bold text-primary text-lg">
+                                                    {bank.account_number}
+                                                </p>
+                                                <div className="flex gap-1 text-sm text-gray-600 mt-2">
+                                                    <span>Atas Nama:</span>
+                                                    <span className="font-bold text-primary">
+                                                        {bank.account_name}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+
+                                    {bankAccounts.length === 0 && (
+                                        <p className="text-gray-500 text-center py-4 bg-gray-50 rounded-lg text-sm">
+                                            Belum ada data rekening bank
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                         </div>
