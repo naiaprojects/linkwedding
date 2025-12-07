@@ -447,7 +447,7 @@ export default function LandingPagePage() {
         section_data: {
           ...data,
           image_url,
-          paymentMethods,
+          payment_methods: paymentMethods,
         },
         updated_at: new Date().toISOString(),
       };
