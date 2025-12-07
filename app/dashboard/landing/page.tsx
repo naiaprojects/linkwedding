@@ -80,39 +80,6 @@ type FeaturesForm = z.infer<typeof featuresSchema>;
 type ContactForm = z.infer<typeof contactSchema>;
 type FAQForm = z.infer<typeof faqSchema>;
 
-const defaultPaymentMethods = [
-  {
-    name: "Bank BCA",
-    image_url:
-      "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg",
-    alt_text: "Bank BCA",
-  },
-  {
-    name: "Bank Mandiri",
-    image_url:
-      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Bank_Mandiri_logo_2016.svg",
-    alt_text: "Bank Mandiri",
-  },
-  {
-    name: "Bank BRI",
-    image_url:
-      "https://upload.wikimedia.org/wikipedia/commons/5/59/BRI_2025.svg",
-    alt_text: "Bank BRI",
-  },
-  {
-    name: "Dana",
-    image_url:
-      "https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg",
-    alt_text: "Dana",
-  },
-  {
-    name: "Ovo",
-    image_url:
-      "https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_ovo_purple.svg",
-    alt_text: "Ovo",
-  },
-];
-
 export default function LandingPagePage() {
   const [activeTab, setActiveTab] = useState("hero");
   const supabase = createClient() as any;
@@ -125,7 +92,7 @@ export default function LandingPagePage() {
   const [sectionIds, setSectionIds] = useState<Record<string, string>>({});
   const [paymentMethods, setPaymentMethods] = useState<
     Array<{ name: string; image_url: string; alt_text: string }>
-  >(defaultPaymentMethods);
+  >([]);
 
   const {
     register: registerHero,
@@ -208,8 +175,9 @@ export default function LandingPagePage() {
               if (featureData.image_url) {
                 setFeatureImagePreview(featureData.image_url);
               }
-              if (featureData.payment_methods) {
-                setPaymentMethods(featureData.payment_methods);
+              const dbPaymentMethods = featureData.payment_methods || (featureData as any).paymentMethods;
+              if (dbPaymentMethods) {
+                setPaymentMethods(dbPaymentMethods);
               }
             } else if (section.section_name === "features") {
               const featureData = section.section_data as FeaturesForm;
@@ -227,113 +195,6 @@ export default function LandingPagePage() {
           });
 
           setSectionIds(ids);
-        } else {
-          resetHero({
-            title: "Kirim Undangan Gak Perlu Ribet lagi",
-            subtitle: "Linkwedding.id",
-            description:
-              "Karena linkwedding.id menghadirkan solusi undangan pernikahan berbasis website yang nggak cuma keren, tapi juga sangat praktis.",
-            stats: [
-              { label: "Pengguna", value: "21" },
-              { label: "Undangan Dibuat", value: "17" },
-              { label: "Ucapan Dikirim", value: "24" },
-            ],
-          });
-          setTimeout(() => triggerHeroValidation(), 100);
-
-          resetFeature({
-            title: "Kenapa harus di",
-            subtitle: "linkwedding.id?",
-            description:
-              "Mudah diakses, hemat biaya, dan banyak metode pembayarannya!",
-            payment_methods: defaultPaymentMethods,
-          });
-
-          resetFeatures({
-            title: "Fitur Unggulan",
-            features: [
-              { name: "Unlimited Guests" },
-              { name: "Photo Gallery & Background" },
-              { name: "Live Streaming" },
-              { name: "RSVP & Wedding Wishes" },
-              { name: "Countdown Timer" },
-              { name: "Wedding Gift" },
-              { name: "Backsound Music" },
-              { name: "Prewedding Video" },
-              { name: "Dresscode" },
-              { name: "Maps" },
-              { name: "Save The Date" },
-              { name: "Love Story" },
-            ],
-          });
-
-          resetContact({
-            title: "Hubungi Kami",
-            description: "Isi form untuk memulai percakapan dengan kami",
-            email: "info@acme.org",
-            phone: "+6289524556302",
-            address: "Yogyakarta, Indonesia",
-          });
-
-          resetFAQ({
-            title: "Frequently Asked Questions",
-            faqs: [
-              {
-                question: "Berapa lama proses pembuatan undanganya kak ?",
-                answer:
-                  "cepet banget, setelah data lengkap masuk pengerjaanya cuma butuh 1 - 3 hari aja",
-              },
-              {
-                question: "Kalo mau revisi bisa ?",
-                answer:
-                  "Tenang di linkwedding.id kamu bisa revisi sampai hari H, jadi jika ada data yang mau diubah tinggal chat admin saja",
-              },
-              {
-                question: "Bisa pasang lagu favorite ngak sih ?",
-                answer:
-                  "Bisa banget, kamu bisa pasang lagu favorite di undangan",
-              },
-              {
-                question: "Bisa request desain sendiri ?",
-                answer:
-                  "Mohon maaf saat ini linkwedding.id belum melayani custom undangan ya kak, desain undangan hanya yang tersedia di catalog",
-              },
-              {
-                question: "Kalau ada kendala, siapa yang bantu ?",
-                answer:
-                  "Tenang tim suport linkwedding.id siap bantu kendalamu sampai hari pernikahanmu",
-              },
-            ],
-          });
-
-          setFaqs([
-            {
-              question: "Berapa lama proses pembuatan undanganya kak ?",
-              answer:
-                "cepet banget, setelah data lengkap masuk pengerjaanya cuma butuh 1 - 3 hari aja",
-            },
-            {
-              question: "Kalo mau revisi bisa ?",
-              answer:
-                "Tenang di linkwedding.id kamu bisa revisi sampai hari H, jadi jika ada data yang mau diubah tinggal chat admin saja",
-            },
-            {
-              question: "Bisa pasang lagu favorite ngak sih ?",
-              answer: "Bisa banget, kamu bisa pasang lagu favorite di undangan",
-            },
-            {
-              question: "Bisa request desain sendiri ?",
-              answer:
-                "Mohon maaf saat ini linkwedding.id belum melayani custom undangan ya kak, desain undangan hanya yang tersedia di catalog",
-            },
-            {
-              question: "Kalau ada kendala, siapa yang bantu ?",
-              answer:
-                "Tenang tim suport linkwedding.id siap bantu kendalamu sampai hari pernikahanmu",
-            },
-          ]);
-
-          setPaymentMethods(defaultPaymentMethods);
         }
       } catch (err: any) {
         console.error("Error loading sections:", err);
