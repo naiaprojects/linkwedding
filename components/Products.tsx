@@ -66,14 +66,6 @@ const ProductCardHome = ({ product }: { product: Product }) => {
       </div>
 
       <div className="px-4 pb-4 flex justify-between">
-        <Link
-          href={`/products/${product.id}`}
-          className="block text-center py-2 px-4 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors"
-        >
-          Detail
-        </Link>
-
-
         {product.demo_url && (
           <Link
             href={product.demo_url}
@@ -85,6 +77,12 @@ const ProductCardHome = ({ product }: { product: Product }) => {
             Demo
           </Link>
         )}
+        <Link
+          href={`/products/${product.id}`}
+          className="block text-center py-2 px-4 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors"
+        >
+          Detail
+        </Link>
       </div>
     </article>
   );
