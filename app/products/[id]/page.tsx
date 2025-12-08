@@ -11,6 +11,7 @@ import {
     ChatBubbleLeftRightIcon,
     ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
+import { trackViewContent, trackContact, trackLead } from "@/lib/meta-pixel";
 
 export default function ProductDetailPage() {
     const [product, setProduct] = useState<Product | null>(null);
@@ -37,6 +38,16 @@ export default function ProductDetailPage() {
                 if (data?.packages && data.packages.length > 0) {
                     const middleIndex = Math.floor(data.packages.length / 2);
                     setSelectedPackage(middleIndex);
+
+                    // Track ViewContent event
+                    const selectedPkg = data.packages[middleIndex];
+                    trackViewContent({
+                        content_name: data.name,
+                        content_ids: [data.id],
+                        content_type: "product",
+                        value: selectedPkg?.price || 0,
+                        currency: "IDR",
+                    });
                 }
             } catch (error) {
                 console.error("Error fetching product:", error);
@@ -74,6 +85,17 @@ export default function ProductDetailPage() {
         message += `\nMohon informasi lebih lanjut. Terima kasih!`;
 
         return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    };
+
+    const handleWhatsAppClick = () => {
+        // Track Contact event when user clicks WhatsApp
+        trackContact();
+        trackLead({
+            content_name: product?.name || "Product Consultation",
+            content_category: "WhatsApp Inquiry",
+            value: product?.packages?.[selectedPackage]?.price || 0,
+            currency: "IDR",
+        });
     };
 
     if (loading) {
@@ -173,6 +195,7 @@ export default function ProductDetailPage() {
                                 href={generateWhatsAppLink()}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                onClick={handleWhatsAppClick}
                                 className="inline-flex w-full md:w-1/3 items-center gap-2 px-6 py-3 bg-white border-2 border-primary text-primary font-medium rounded-xl hover:border-primary/40 transition-colors"
                             >
                                 <ChatBubbleLeftRightIcon className="w-5 h-5" />

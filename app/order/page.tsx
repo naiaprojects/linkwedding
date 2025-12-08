@@ -7,6 +7,7 @@ import { Product, ProductPackage } from "@/types/product";
 import { BankAccount } from "@/types/bank";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import LogoLoader from "@/components/LogoLoader";
+import { trackInitiateCheckout, trackPurchase } from "@/lib/meta-pixel";
 
 export default function OrderPage() {
     const [product, setProduct] = useState<Product | null>(null);
@@ -50,6 +51,19 @@ export default function OrderPage() {
 
             if (error) throw error;
             setProduct(data);
+
+            // Track InitiateCheckout event
+            if (data && data.packages && data.packages.length > 0) {
+                const pkgIndex = packageIndex ? parseInt(packageIndex) : 0;
+                const pkg = data.packages[pkgIndex] || data.packages[0];
+                trackInitiateCheckout({
+                    content_name: `${data.name} - ${pkg.name}`,
+                    content_ids: [data.id],
+                    value: pkg.price,
+                    currency: "IDR",
+                    num_items: 1,
+                });
+            }
         } catch (error) {
             console.error("Error fetching product:", error);
             router.push("/products");
@@ -168,6 +182,15 @@ export default function OrderPage() {
                 .single<any>();
 
             if (error) throw error;
+
+            // Track Purchase event
+            trackPurchase({
+                content_name: `${product.name} - ${currentPackage.name}`,
+                content_ids: [product.id],
+                value: total,
+                currency: "IDR",
+                num_items: 1,
+            });
 
             // Redirect to invoice page
             router.push(`/invoice/${data.id}`);
