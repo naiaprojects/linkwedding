@@ -10,7 +10,9 @@ import {
     ArrowLeftIcon,
     CloudArrowUpIcon,
     CheckCircleIcon,
+    ChatBubbleLeftRightIcon,
 } from "@heroicons/react/24/outline";
+import { trackContact } from "@/lib/meta-pixel";
 
 export default function ConfirmPaymentPage() {
     const [order, setOrder] = useState<Order | null>(null);
@@ -150,6 +152,23 @@ export default function ConfirmPaymentPage() {
             currency: "IDR",
             minimumFractionDigits: 0,
         }).format(price);
+    };
+
+    const generateWhatsAppLink = () => {
+        if (!order) return "#";
+
+        const phoneNumber = "6289524556302"; // Admin WhatsApp linkwedding
+
+        let message = `Halo Admin LinkWedding, saya ingin konfirmasi pembayaran untuk:\n\n`;
+        message += `📋 Order ID: *${order.invoice_number}*\n`;
+        message += `💰 Total: *${formatPrice(order.total)}*\n`;
+        message += `\nMohon dicek ya, terima kasih.`;
+
+        return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    };
+
+    const handleWhatsAppClick = () => {
+        trackContact();
     };
 
     if (loading) {
@@ -303,6 +322,26 @@ export default function ConfirmPaymentPage() {
                                 <CheckCircleIcon className="w-5 h-5" />
                                 {submitting ? "Mengirim..." : "Kirim Konfirmasi"}
                             </button>
+
+                            <div className="relative my-6">
+                                <div className="absolute inset-0 flex items-center">
+                                    <div className="w-full border-t border-gray-200"></div>
+                                </div>
+                                <div className="relative flex justify-center text-sm">
+                                    <span className="px-2 bg-white text-gray-500">Atau</span>
+                                </div>
+                            </div>
+
+                            <a
+                                href={generateWhatsAppLink()}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={handleWhatsAppClick}
+                                className="w-full py-3 bg-white border-2 border-green-500 text-green-600 font-medium rounded-xl hover:bg-green-50 transition-colors flex items-center justify-center gap-2"
+                            >
+                                <ChatBubbleLeftRightIcon className="w-5 h-5" />
+                                Konfirmasi via WhatsApp
+                            </a>
                         </form>
                     </div>
                 </div>
