@@ -14,6 +14,7 @@ const settingsSchema = z.object({
   meta_title: z.string().optional(),
   meta_description: z.string().optional(),
   meta_keywords: z.string().optional(),
+  meta_pixel_id: z.string().optional(),
 });
 
 type SettingsForm = z.infer<typeof settingsSchema>;
@@ -67,6 +68,7 @@ export default function SettingsPage() {
             meta_title: data.meta_title || "",
             meta_description: data.meta_description || "",
             meta_keywords: data.meta_keywords?.join(", ") || "",
+            meta_pixel_id: data.meta_pixel_id || "",
           });
 
           if (data.favicon_url) {
@@ -92,6 +94,7 @@ export default function SettingsPage() {
             meta_title: "",
             meta_description: "",
             meta_keywords: "",
+            meta_pixel_id: "",
           });
         }
       } catch (err: any) {
@@ -168,6 +171,7 @@ export default function SettingsPage() {
         meta_keywords: data.meta_keywords
           ? data.meta_keywords.split(",").map((k) => k.trim())
           : null,
+        meta_pixel_id: data.meta_pixel_id || null,
         meta_verification,
         updated_at: new Date().toISOString(),
       };
@@ -414,6 +418,28 @@ export default function SettingsPage() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                       placeholder="kata1, kata2, kata3"
                     />
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-xl sm:rounded-2xl border border-gray-200 bg-white p-4 sm:p-6">
+                <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-4">
+                  Meta Ads (Facebook Pixel)
+                </h4>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Meta Pixel ID
+                    </label>
+                    <input
+                      {...register("meta_pixel_id")}
+                      type="text"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
+                      placeholder="Contoh: 867250329592263"
+                    />
+                    <p className="mt-1 text-xs text-gray-500">
+                      Masukkan Pixel ID dari Meta Business Suite. ID ini akan digunakan untuk tracking di seluruh website.
+                    </p>
                   </div>
                 </div>
               </div>

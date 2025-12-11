@@ -39,13 +39,14 @@ export default async function RootLayout({
   const supabase = createClient();
   const { data } = await supabase
     .from("site_settings")
-    .select("favicon_url, meta_verification")
+    .select("favicon_url, meta_verification, meta_pixel_id")
     .eq("id", SETTINGS_ID)
     .single();
 
   const faviconUrl = data?.favicon_url || "/favicon.ico";
   const verifications =
     (data?.meta_verification as Record<string, string>) || {};
+  const metaPixelId = data?.meta_pixel_id || null;
 
   return (
     <html lang="id">
