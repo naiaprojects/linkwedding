@@ -15,7 +15,6 @@ export const trackPageView = () => {
     }
 };
 
-// Track when user views a product
 export const trackViewContent = (params: {
     content_name: string;
     content_ids?: string[];

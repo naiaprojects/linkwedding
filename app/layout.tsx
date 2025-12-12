@@ -30,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-// === LAYOUT UTAMA ===
+
 export default async function RootLayout({
   children,
 }: {
