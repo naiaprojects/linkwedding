@@ -1,13 +1,12 @@
 // lib/meta-pixel.ts
 // Helper functions for Meta Pixel (Facebook CAPI) tracking
+// Note: Pixel ID is now dynamically loaded from database in layout.tsx
 
 declare global {
     interface Window {
         fbq: (...args: any[]) => void;
     }
 }
-
-export const META_PIXEL_ID = "867250329592263";
 
 // Track page view (already tracked automatically)
 export const trackPageView = () => {
