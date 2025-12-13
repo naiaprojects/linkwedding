@@ -22,6 +22,7 @@ export default function ConfirmPaymentPage() {
     const [proofFile, setProofFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string>("");
     const [emailVerified, setEmailVerified] = useState(false);
+    const [confirmationMethod, setConfirmationMethod] = useState<'upload' | 'whatsapp'>('upload');
 
     const params = useParams();
     const router = useRouter();
@@ -265,84 +266,120 @@ export default function ConfirmPaymentPage() {
                             </div>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="p-6">
-                            <div className="mb-6">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Upload Bukti Transfer
-                                </label>
-                                <div
-                                    className={`border-2 border-dashed rounded-xl p-8 text-center transition-colors ${previewUrl
-                                            ? "border-primary bg-primary/5"
-                                            : "border-gray-200 hover:border-gray-300"
+                        <div className="p-6">
+                            {/* Tab Selector */}
+                            <div className="flex rounded-xl bg-gray-100 p-1 mb-6">
+                                <button
+                                    type="button"
+                                    onClick={() => setConfirmationMethod('upload')}
+                                    className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2 ${confirmationMethod === 'upload'
+                                            ? 'bg-white text-primary shadow-sm'
+                                            : 'text-gray-600 hover:text-gray-800'
                                         }`}
                                 >
-                                    {previewUrl ? (
-                                        <div>
-                                            <img
-                                                src={previewUrl}
-                                                alt="Preview"
-                                                className="max-h-64 mx-auto rounded-lg mb-4"
-                                            />
-                                            <button
-                                                type="button"
-                                                onClick={() => {
-                                                    setProofFile(null);
-                                                    setPreviewUrl("");
-                                                }}
-                                                className="text-sm text-red-500 hover:underline"
-                                            >
-                                                Hapus gambar
-                                            </button>
-                                        </div>
-                                    ) : (
-                                        <label className="cursor-pointer">
-                                            <CloudArrowUpIcon className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                                            <p className="text-gray-600 mb-2">
-                                                Klik untuk upload atau drag & drop
-                                            </p>
-                                            <p className="text-sm text-gray-400">
-                                                PNG, JPG hingga 5MB
-                                            </p>
-                                            <input
-                                                type="file"
-                                                accept="image/*"
-                                                onChange={handleFileChange}
-                                                className="hidden"
-                                            />
+                                    <CloudArrowUpIcon className="w-5 h-5" />
+                                    Upload Bukti
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setConfirmationMethod('whatsapp')}
+                                    className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2 ${confirmationMethod === 'whatsapp'
+                                            ? 'bg-white text-green-600 shadow-sm'
+                                            : 'text-gray-600 hover:text-gray-800'
+                                        }`}
+                                >
+                                    <ChatBubbleLeftRightIcon className="w-5 h-5" />
+                                    Via WhatsApp
+                                </button>
+                            </div>
+
+                            {/* Upload Form */}
+                            {confirmationMethod === 'upload' && (
+                                <form onSubmit={handleSubmit}>
+                                    <div className="mb-6">
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            Upload Bukti Transfer
                                         </label>
-                                    )}
-                                </div>
-                            </div>
+                                        <div
+                                            className={`border-2 border-dashed rounded-xl p-8 text-center transition-colors ${previewUrl
+                                                ? "border-primary bg-primary/5"
+                                                : "border-gray-200 hover:border-gray-300"
+                                                }`}
+                                        >
+                                            {previewUrl ? (
+                                                <div>
+                                                    <img
+                                                        src={previewUrl}
+                                                        alt="Preview"
+                                                        className="max-h-64 mx-auto rounded-lg mb-4"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            setProofFile(null);
+                                                            setPreviewUrl("");
+                                                        }}
+                                                        className="text-sm text-red-500 hover:underline"
+                                                    >
+                                                        Hapus gambar
+                                                    </button>
+                                                </div>
+                                            ) : (
+                                                <label className="cursor-pointer">
+                                                    <CloudArrowUpIcon className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                                                    <p className="text-gray-600 mb-2">
+                                                        Klik untuk upload atau drag & drop
+                                                    </p>
+                                                    <p className="text-sm text-gray-400">
+                                                        PNG, JPG hingga 5MB
+                                                    </p>
+                                                    <input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        onChange={handleFileChange}
+                                                        className="hidden"
+                                                    />
+                                                </label>
+                                            )}
+                                        </div>
+                                    </div>
 
-                            <button
-                                type="submit"
-                                disabled={submitting || !proofFile}
-                                className="w-full py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                            >
-                                <CheckCircleIcon className="w-5 h-5" />
-                                {submitting ? "Mengirim..." : "Kirim Konfirmasi"}
-                            </button>
+                                    <button
+                                        type="submit"
+                                        disabled={submitting || !proofFile}
+                                        className="w-full py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                    >
+                                        <CheckCircleIcon className="w-5 h-5" />
+                                        {submitting ? "Mengirim..." : "Kirim Konfirmasi"}
+                                    </button>
+                                </form>
+                            )}
 
-                            <div className="relative my-6">
-                                <div className="absolute inset-0 flex items-center">
-                                    <div className="w-full border-t border-gray-200"></div>
+                            {/* WhatsApp Confirmation */}
+                            {confirmationMethod === 'whatsapp' && (
+                                <div className="text-center">
+                                    <div className="mb-6">
+                                        <ChatBubbleLeftRightIcon className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                                        <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                                            Konfirmasi via WhatsApp
+                                        </h3>
+                                        <p className="text-gray-600">
+                                            Klik tombol di bawah untuk mengirim konfirmasi pembayaran langsung ke admin kami via WhatsApp.
+                                        </p>
+                                    </div>
+                                    <a
+                                        href={generateWhatsAppLink()}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={handleWhatsAppClick}
+                                        className="w-full py-3 bg-green-500 text-white font-medium rounded-xl hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
+                                    >
+                                        <ChatBubbleLeftRightIcon className="w-5 h-5" />
+                                        Buka WhatsApp
+                                    </a>
                                 </div>
-                                <div className="relative flex justify-center text-sm">
-                                    <span className="px-2 bg-white text-gray-500">Atau</span>
-                                </div>
-                            </div>
-
-                            <a
-                                href={generateWhatsAppLink()}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={handleWhatsAppClick}
-                                className="w-full py-3 bg-white border-2 border-green-500 text-green-600 font-medium rounded-xl hover:bg-green-50 transition-colors flex items-center justify-center gap-2"
-                            >
-                                <ChatBubbleLeftRightIcon className="w-5 h-5" />
-                                Konfirmasi via WhatsApp
-                            </a>
-                        </form>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
