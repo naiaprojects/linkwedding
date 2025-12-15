@@ -3,37 +3,37 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface OrderEmailData {
-    customerName: string;
-    customerEmail: string;
-    invoiceNumber: string;
-    productName: string;
-    packageName: string;
-    total: number;
-    paymentDeadline: string;
-    invoiceUrl: string;
+  customerName: string;
+  customerEmail: string;
+  invoiceNumber: string;
+  productName: string;
+  packageName: string;
+  total: number;
+  paymentDeadline: string;
+  invoiceUrl: string;
 }
 
 export async function sendOrderConfirmationEmail(data: OrderEmailData) {
-    const formattedTotal = new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-        minimumFractionDigits: 0,
-    }).format(data.total);
+  const formattedTotal = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+  }).format(data.total);
 
-    const formattedDeadline = new Date(data.paymentDeadline).toLocaleDateString("id-ID", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-    });
+  const formattedDeadline = new Date(data.paymentDeadline).toLocaleDateString("id-ID", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
-    try {
-        const { data: emailData, error } = await resend.emails.send({
-            from: 'LinkWedding <noreply@linkwedding.id>',
-            to: data.customerEmail,
-            subject: `Pesanan Anda - ${data.invoiceNumber}`,
-            html: `
+  try {
+    const { data: emailData, error } = await resend.emails.send({
+      from: 'LinkWedding <noreply@linkwedding.id>',
+      to: data.customerEmail,
+      subject: `Pesanan Anda - ${data.invoiceNumber}`,
+      html: `
         <!DOCTYPE html>
         <html>
         <head>
@@ -107,16 +107,90 @@ export async function sendOrderConfirmationEmail(data: OrderEmailData) {
         </body>
         </html>
       `,
-        });
+    });
 
-        if (error) {
-            console.error('Error sending email:', error);
-            return { success: false, error };
-        }
-
-        return { success: true, data: emailData };
-    } catch (error) {
-        console.error('Error sending email:', error);
-        return { success: false, error };
+    if (error) {
+      console.error('Error sending email:', error);
+      return { success: false, error };
     }
+
+    return { success: true, data: emailData };
+  } catch (error) {
+    console.error('Error sending email:', error);
+    return { success: false, error };
+  }
+
+}
+
+interface PaymentProofEmailData {
+  invoiceNumber: string;
+  customerName: string;
+  total: number;
+  paymentMethod: string;
+  proofUrl: string;
+}
+
+export async function sendPaymentProofNotification(data: PaymentProofEmailData) {
+  const formattedTotal = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+  }).format(data.total);
+
+  try {
+    const { data: emailData, error } = await resend.emails.send({
+      from: 'LinkWedding <notification@linkwedding.id>',
+      to: 'linkweddinng@gmail.com',
+      subject: `[Bukti Bayar] Invoice #${data.invoiceNumber} - ${data.customerName}`,
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+        </head>
+        <body style="font-family: sans-serif; padding: 20px;">
+          <h2>Konfirmasi Pembayaran Baru</h2>
+          <p>Ada bukti pembayaran baru yang diupload oleh customer.</p>
+          
+          <table style="width: 100%; max-width: 500px; border-collapse: collapse; margin-bottom: 20px;">
+            <tr>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">No. Invoice</td>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd; font-weight: bold;">${data.invoiceNumber}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Customer</td>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">${data.customerName}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Total</td>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">${formattedTotal}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Metode</td>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">${data.paymentMethod}</td>
+            </tr>
+          </table>
+
+          <p>
+            <a href="${data.proofUrl}" style="background-color: #0891b2; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Lihat Bukti Pembayaran</a>
+          </p>
+          
+          <p style="margin-top: 30px; font-size: 12px; color: #666;">
+            Email ini dikirim otomatis oleh sistem LinkWedding.
+          </p>
+        </body>
+        </html>
+      `,
+    });
+
+    if (error) {
+      console.error('Error sending notification email:', error);
+      return { success: false, error };
+    }
+
+    return { success: true, data: emailData };
+  } catch (error) {
+    console.error('Error sending notification email:', error);
+    return { success: false, error };
+  }
 }

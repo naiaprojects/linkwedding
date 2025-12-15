@@ -22,7 +22,8 @@ export default function ConfirmPaymentPage() {
     const [proofFile, setProofFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string>("");
     const [emailVerified, setEmailVerified] = useState(false);
-    const [showUploadForm, setShowUploadForm] = useState(false);
+
+    const [uploadSuccess, setUploadSuccess] = useState(false);
     const [adminPhone, setAdminPhone] = useState<string>("6289524556302");
 
     const params = useParams();
@@ -141,6 +142,7 @@ export default function ConfirmPaymentPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        if (!order) return;
         if (!proofFile) {
             alert("Mohon upload bukti pembayaran");
             return;
@@ -162,8 +164,11 @@ export default function ConfirmPaymentPage() {
 
             if (error) throw error;
 
-            alert("Konfirmasi pembayaran berhasil dikirim!");
-            router.push(`/invoice/${orderId}`);
+            if (error) throw error;
+
+            setUploadSuccess(true);
+            setProofFile(null);
+            setPreviewUrl("");
         } catch (error: any) {
             console.error("Error confirming payment:", error);
             alert("Gagal mengirim konfirmasi: " + error.message);
@@ -290,58 +295,42 @@ export default function ConfirmPaymentPage() {
                         </div>
 
                         <div className="p-6">
-                            {/* Main Buttons */}
-                            {!showUploadForm ? (
-                                <>
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowUploadForm(true)}
-                                        className="w-full py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
-                                    >
-                                        <CloudArrowUpIcon className="w-5 h-5" />
-                                        Konfirmasi via Upload
-                                    </button>
+                            {uploadSuccess ? (
+                                <div className="text-center py-6">
+                                    <CheckCircleIcon className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                                    <h3 className="text-xl font-bold text-gray-800 mb-2">
+                                        Konfirmasi Berhasil!
+                                    </h3>
+                                    <p className="text-gray-600 mb-8">
+                                        Bukti pembayaran Anda telah kami terima dan akan segera diproses.
+                                    </p>
 
-                                    <div className="relative my-6">
-                                        <div className="absolute inset-0 flex items-center">
-                                            <div className="w-full border-t border-gray-200"></div>
-                                        </div>
-                                        <div className="relative flex justify-center text-sm">
-                                            <span className="px-2 bg-white text-gray-500">Atau</span>
-                                        </div>
+                                    <div className="space-y-3">
+                                        <a
+                                            href={generateWhatsAppLink()}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            onClick={handleWhatsAppClick}
+                                            className="block w-full py-3 bg-white border-2 border-green-500 text-green-600 font-medium rounded-xl hover:bg-green-50 transition-colors flex items-center justify-center gap-2"
+                                        >
+                                            <ChatBubbleLeftRightIcon className="w-5 h-5" />
+                                            Konfirmasi via WhatsApp
+                                        </a>
+
+                                        <Link
+                                            href={`/invoice/${orderId}`}
+                                            className="block w-full py-3 bg-gray-50 text-gray-600 font-medium rounded-xl hover:bg-gray-100 transition-colors"
+                                        >
+                                            Kembali ke Invoice
+                                        </Link>
                                     </div>
-
-                                    <a
-                                        href={generateWhatsAppLink()}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        onClick={handleWhatsAppClick}
-                                        className="w-full py-3 bg-white border-2 border-green-500 text-green-600 font-medium rounded-xl hover:bg-green-50 transition-colors flex items-center justify-center gap-2"
-                                    >
-                                        <ChatBubbleLeftRightIcon className="w-5 h-5" />
-                                        Konfirmasi via WhatsApp
-                                    </a>
-                                </>
+                                </div>
                             ) : (
-                                /* Upload Form */
                                 <form onSubmit={handleSubmit}>
                                     <div className="mb-6">
-                                        <div className="flex items-center justify-between mb-2">
-                                            <label className="block text-sm font-medium text-gray-700">
-                                                Upload Bukti Transfer
-                                            </label>
-                                            <button
-                                                type="button"
-                                                onClick={() => {
-                                                    setShowUploadForm(false);
-                                                    setProofFile(null);
-                                                    setPreviewUrl("");
-                                                }}
-                                                className="text-sm text-gray-500 hover:text-gray-700"
-                                            >
-                                                ← Kembali
-                                            </button>
-                                        </div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-4">
+                                            Upload Bukti Transfer
+                                        </label>
                                         <div
                                             className={`border-2 border-dashed rounded-xl p-8 text-center transition-colors ${previewUrl
                                                 ? "border-primary bg-primary/5"
